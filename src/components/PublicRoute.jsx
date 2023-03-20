@@ -1,9 +1,11 @@
-import { redirect } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { Container, Loader } from 'rsuite';
 
 import { useProfile } from '../context/profile.context';
 
 const PublicRoute = ({ children }) => {
+  const navigate = useNavigate();
+
   const { profile, isLoading } = useProfile();
   if (isLoading && !profile) {
     return (
@@ -13,7 +15,7 @@ const PublicRoute = ({ children }) => {
     );
   }
   if (profile && !isLoading) {
-    redirect('/');
+    navigate('/');
   }
   return children;
 };

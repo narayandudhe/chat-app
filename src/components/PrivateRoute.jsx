@@ -1,9 +1,12 @@
-import { redirect } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { Container, Loader } from 'rsuite';
 import { useProfile } from '../context/profile.context';
 
 const PrivateRoute = ({ children }) => {
+  const navigate = useNavigate();
+
   const { profile, isLoading } = useProfile();
+
   if (isLoading && !profile) {
     return (
       <Container>
@@ -12,7 +15,7 @@ const PrivateRoute = ({ children }) => {
     );
   }
   if (!profile && !isLoading) {
-    return redirect('/signin');
+    return navigate('/signin');
   }
   return children;
 };
