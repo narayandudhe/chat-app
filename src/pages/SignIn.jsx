@@ -1,21 +1,16 @@
 import firebase from 'firebase/compat/app';
-import {
-  Button,
-  Col,
-  Container,
-  Grid,
-  Panel,
-  Row,
-  useToaster,
-  Message,
-} from 'rsuite';
+import {useToaster,Message, Button, Col, Container, Grid, Panel, Row } from 'rsuite';
 import FacebookOfficialIcon from '@rsuite/icons/legacy/FacebookOfficial';
 import GooglePlusCircleIcon from '@rsuite/icons/legacy/GooglePlusCircle';
 import { auth, database } from '../misc/firebase';
 
 const SignIn = () => {
   const toaster = useToaster();
-
+  const Alert = (type, message) => {
+    toaster.push(<Message type={type}>{message}</Message>, {
+      duration: 4000,
+    });
+  };
   const signInWithProvider = async provider => {
     try {
       const { additionalUserInfo, user } = await auth.signInWithPopup(provider);
@@ -30,11 +25,7 @@ const SignIn = () => {
       Alert('info', error.message);
     }
   };
-  const Alert = (type, message) => {
-    toaster.push(<Message type={type}>{message}</Message>, {
-      duration: 4000,
-    });
-  };
+
   const onFacebookSignIn = () => {
     signInWithProvider(new firebase.auth.FacebookAuthProvider());
   };
